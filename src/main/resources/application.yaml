@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/task_tracker
+    username: postgres
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: none
+      format_sql: true
+      use_sql_comments: true
+    show-sql: true
+  mvc:
+    cors:
+      allowed-origins: http://localhost:5173

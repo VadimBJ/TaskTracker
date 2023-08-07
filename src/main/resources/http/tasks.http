@@ -1,0 +1,79 @@
+### Getting all tasks for first user
+
+GET localhost:8080/users/1/tasks
+
+### Getting all tasks for second user
+
+GET localhost:8080/users/2/tasks
+
+### Add task for first user
+
+POST localhost:8080/users/1/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 1",
+  "description": "Do your home work",
+  "startDate": "2023-09-01",
+  "finishDate": "2023-09-10"
+}
+
+### Add task for second user
+
+POST localhost:8080/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 2",
+  "description": "Do your home work!!!",
+  "startDate": "2023-09-05",
+  "finishDate": "2023-09-15"
+}
+
+### Add task for user, with invalid date
+
+POST localhost:8080/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 2",
+  "description": "Do your home work!!!",
+  "startDate": "2023-02-05",
+  "finishDate": "2023-09-15"
+}
+
+### Add task for user, with empty title
+
+POST localhost:8080/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "Do your home work!!!",
+  "startDate": "2023-09-05",
+  "finishDate": "2023-09-15"
+}
+
+### Add task for user, with empty description
+
+POST localhost:8080/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 2",
+  "description": "",
+  "startDate": "2023-09-05",
+  "finishDate": "2023-09-15"
+}
+
+### Add task for user, with all invalid fields
+
+POST localhost:8080/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "",
+  "description": "",
+  "startDate": "2023-02-05",
+  "finishDate": "2023-04-15"
+}
