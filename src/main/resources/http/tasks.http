@@ -77,3 +77,15 @@ Content-Type: application/json
   "startDate": "2023-02-05",
   "finishDate": "2023-04-15"
 }
+
+### Add task for non exist user
+
+POST localhost:8080/users/155/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 1",
+  "description": "Do your home work",
+  "startDate": "2023-09-01",
+  "finishDate": "2023-09-10"
+}

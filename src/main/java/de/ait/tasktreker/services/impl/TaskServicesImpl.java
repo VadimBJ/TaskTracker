@@ -28,7 +28,7 @@ public class TaskServicesImpl implements TasksService {
   public TaskDto addTask(Long idUser, NewTaskDto newTask) {
     User user = usersRepository.findById(idUser)
         .orElseThrow(() ->
-            new IncorrectUserIdException("Id <" + idUser + "> is not correct"));
+            new IncorrectUserIdException(idUser));
 
     Task task = Task.builder()
         .title(newTask.getTitle())
@@ -49,7 +49,7 @@ public class TaskServicesImpl implements TasksService {
   public TasksDto getUserTasks(Long idUser) {
     User user = usersRepository.findById(idUser)
         .orElseThrow(() ->
-            new IncorrectUserIdException("Id <" + idUser + "> is not correct"));
+            new IncorrectUserIdException(idUser));
     List<Task> tasks = tasksRepository.findAllByUserId(user);
 
     return TasksDto.builder()

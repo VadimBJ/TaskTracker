@@ -1,9 +1,6 @@
 package de.ait.tasktreker.controllers.api;
 
-import de.ait.tasktreker.dto.NewTaskDto;
-import de.ait.tasktreker.dto.TaskDto;
-import de.ait.tasktreker.dto.TasksDto;
-import de.ait.tasktreker.dto.UserDto;
+import de.ait.tasktreker.dto.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -28,7 +25,7 @@ public interface TasksApi {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "422", description = "User with the specified ID is not found",
           content = {
-              @Content()
+              @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDto.class))
           }),
       @ApiResponse(responseCode = "201", description = "Task added",
           content = {

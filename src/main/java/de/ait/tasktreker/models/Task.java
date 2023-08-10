@@ -1,6 +1,5 @@
 package de.ait.tasktreker.models;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
