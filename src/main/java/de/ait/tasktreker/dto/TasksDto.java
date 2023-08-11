@@ -18,6 +18,9 @@ public class TasksDto {
   @Schema(description = "Task list")
   private List<TaskDto> tasks;
 
-  @Schema(description = "Number of user tasks", example = "1")
-  private Integer count;
+  @Schema(description = "Number of tasks", example = "1")
+  private Long count;
+
+  @Schema(description = "Number of pages", example = "1")
+  private Integer pages;
 }

@@ -10,6 +10,9 @@ import de.ait.tasktreker.repositories.TasksRepository;
 import de.ait.tasktreker.repositories.UsersRepository;
 import de.ait.tasktreker.services.TasksService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,7 +57,38 @@ public class TaskServicesImpl implements TasksService {
 
     return TasksDto.builder()
         .tasks(TaskDto.from(tasks))
-        .count(tasks.size())
+        .count((long) tasks.size())
+        .build();
+  }
+
+  @Override
+  public TasksDto getAllTasks(Integer page, Integer items, String orderBy, Boolean desk, String filterBy, String filterValue) {
+
+    PageRequest pageRequest;
+
+    //todo добавить фильтрацию
+    //todo добавить описание в api
+    
+
+    if (orderBy != null && !orderBy.equals("")) {
+      Sort.Direction direction = Sort.Direction.ASC;
+
+      if (desk != null && desk) {
+        direction = Sort.Direction.DESC;
+      }
+
+      Sort sort = Sort.by(direction, orderBy);
+      pageRequest = PageRequest.of(page, items, sort);
+    } else {
+      pageRequest = PageRequest.of(page, items);
+    }
+
+    Page<Task> pageOfTasks = tasksRepository.findAll(pageRequest);
+
+    return TasksDto.builder()
+        .tasks(from(pageOfTasks.getContent()))
+        .count(pageOfTasks.getTotalElements())
+        .pages(pageOfTasks.getTotalPages())
         .build();
   }
 }

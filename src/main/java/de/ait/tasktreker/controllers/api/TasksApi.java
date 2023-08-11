@@ -52,4 +52,19 @@ public interface TasksApi {
   @GetMapping("/users/{id_user}/tasks")
   ResponseEntity<TasksDto> getUserTasks(@Parameter(required = true, description = "User id", example = "1")
                                         @PathVariable("id_user") Long idUser);
+
+
+  @Operation(summary = "Getting all tasks", description = "Everyone allowed")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Tasks list",
+          content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = TasksDto.class))
+          })})
+  @GetMapping("/tasks")
+  ResponseEntity<TasksDto> getAllTasks(@RequestParam(value = "page") Integer page,
+                                       @RequestParam(value = "items") Integer items,
+                                       @RequestParam(value = "orderBy", required = false) String orderBy,
+                                       @RequestParam(value = "desk", required = false) Boolean desk,
+                                       @RequestParam(value = "filterBy", required = false) String filterBy,
+                                       @RequestParam(value = "filterValue", required = false) String filterValue);
 }

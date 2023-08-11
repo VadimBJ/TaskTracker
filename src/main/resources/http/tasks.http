@@ -1,3 +1,15 @@
+### Get all tasks, page 1
+
+GET localhost:8080/tasks?page=0&items=3
+
+### Get all tasks, page 1, sorted by title
+
+GET localhost:8080/tasks?page=0&items=3&orderBy=title
+
+### Get all tasks, page 1, sorted by title DESK
+
+GET localhost:8080/tasks?page=0&items=3&orderBy=title&desk=true
+
 ### Getting all tasks for first user
 
 GET localhost:8080/users/1/tasks
