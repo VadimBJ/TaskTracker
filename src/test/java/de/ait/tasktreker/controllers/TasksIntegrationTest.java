@@ -45,6 +45,25 @@ public class TasksIntegrationTest {
           .andExpect(jsonPath("$.count", is(8)));
     }
 
+    @Test
+    @Sql(scripts = "/sql/data_for_tasks.sql")
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    void get_all_task_with_pagination_sorting_and_filtering() throws Exception {
+
+      mockMvc.perform(get("/api/tasks")
+              .param("page", "0")
+              .param("items", "5")
+              .param("orderBy", "title")
+              .param("desk", "true")
+              .param("filterBy", "finishDate")
+              .param("filterValue", "2023-09-15"))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("$.count", is(2)))
+          .andExpect(jsonPath("$.pages", is(1)))
+          .andExpect(jsonPath("$.tasks.size()", is(2)));
+
+    }
+
   }
 }
 
