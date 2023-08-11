@@ -65,10 +65,10 @@ public class TaskServicesImpl implements TasksService {
   public TasksDto getAllTasks(Integer page, Integer items, String orderBy, Boolean desk, String filterBy, String filterValue) {
 
     PageRequest pageRequest;
+    Page<Task> pageOfTasks;
 
-    //todo добавить фильтрацию
     //todo добавить описание в api
-    
+
 
     if (orderBy != null && !orderBy.equals("")) {
       Sort.Direction direction = Sort.Direction.ASC;
@@ -80,10 +80,18 @@ public class TaskServicesImpl implements TasksService {
       Sort sort = Sort.by(direction, orderBy);
       pageRequest = PageRequest.of(page, items, sort);
     } else {
-      pageRequest = PageRequest.of(page, items);
+      pageRequest = PageRequest.of(page, items, Sort.by(Sort.Direction.ASC, "id"));
     }
 
-    Page<Task> pageOfTasks = tasksRepository.findAll(pageRequest);
+    switch (filterBy) {
+      case null, "" -> pageOfTasks = tasksRepository.findAll(pageRequest);
+      case "startDate" ->
+          pageOfTasks = tasksRepository.findAllByStartDate(LocalDate.parse(filterValue), pageRequest);
+      case "finishDate" ->
+          pageOfTasks = tasksRepository.findAllByFinishDate(LocalDate.parse(filterValue), pageRequest);
+      default -> pageOfTasks = tasksRepository.findAll(pageRequest);
+    }
+
 
     return TasksDto.builder()
         .tasks(from(pageOfTasks.getContent()))

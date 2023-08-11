@@ -1,14 +1,26 @@
-### Get all tasks, page 1
+### Get all tasks, page 1 with 3 items
 
 GET localhost:8080/tasks?page=0&items=3
 
-### Get all tasks, page 1, sorted by title
+### Get all tasks, page 1 with 3 items, sorted by title
 
 GET localhost:8080/tasks?page=0&items=3&orderBy=title
 
-### Get all tasks, page 1, sorted by title DESK
+### Get all tasks, page 1 with 3 items, sorted by title DESK
 
 GET localhost:8080/tasks?page=0&items=3&orderBy=title&desk=true
+
+### Get all tasks, page 1 with 3 items, filtered by start date
+
+GET localhost:8080/tasks?page=0&items=3&filterBy=startDate&filterValue=2023-09-01
+
+### Get all tasks, page 1 with 3 items, filtered by finish date
+
+GET localhost:8080/tasks?page=0&items=3&filterBy=finishDate&filterValue=2023-09-10
+
+### Get all tasks, page 1 with 3 items, sorted by title DESK, filtered by finish date
+
+GET localhost:8080/tasks?page=0&items=3&orderBy=title&desk=true&filterBy=finishDate&filterValue=2023-09-10
 
 ### Getting all tasks for first user
 
