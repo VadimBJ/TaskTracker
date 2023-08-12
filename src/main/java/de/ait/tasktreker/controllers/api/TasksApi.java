@@ -33,12 +33,12 @@ public interface TasksApi {
                                        @RequestParam(value = "page") Integer page,
                                        @Parameter(required = true, description = "Number of items per page", example = "3")
                                        @RequestParam(value = "items") Integer items,
-                                       @Parameter(required = false, description = "Sorting field: id, title, description, startDate, finishDate (default field: id)", example = "title")
+                                       @Parameter(description = "Sorting field: id, title, description, startDate, finishDate (default field: id)", example = "title")
                                        @RequestParam(value = "orderBy", required = false) String orderBy,
-                                       @Parameter(required = false, description = "Sorting direction (DESK = true, ASK = false)", example = "true")
+                                       @Parameter(description = "Sorting direction (true = DESK, false = ASK)", example = "true")
                                        @RequestParam(value = "desk", required = false) Boolean desk,
-                                       @Parameter(required = false, description = "Filter field: startDate, finishDate", example = "startDate")
+                                       @Parameter(description = "Filter field: startDate, finishDate", example = "startDate")
                                        @RequestParam(value = "filterBy", required = false) String filterBy,
-                                       @Parameter(required = false, description = "Filter field value", example = "2023-09-01")
+                                       @Parameter(description = "Filter field value", example = "2023-09-01")
                                        @RequestParam(value = "filterValue", required = false) String filterValue);
 }
