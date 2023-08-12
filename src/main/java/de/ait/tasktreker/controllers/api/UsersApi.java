@@ -57,7 +57,7 @@ public interface UsersApi {
               @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDto.class))
           })
   })
-  @PostMapping("/users/{id_user}/tasks")
+  @PostMapping("/{id_user}/tasks")
   @ResponseStatus(HttpStatus.CREATED)
   ResponseEntity<TaskDto> addTask(@Parameter(required = true, description = "User id", example = "1")
                                   @PathVariable("id_user") Long idUser,
@@ -74,7 +74,7 @@ public interface UsersApi {
               @Content(mediaType = "application/json", schema = @Schema(implementation = TasksDto.class))
           })
   })
-  @GetMapping("/users/{id_user}/tasks")
+  @GetMapping("/{id_user}/tasks")
   ResponseEntity<TasksDto> getUserTasks(@Parameter(required = true, description = "User id", example = "1")
                                         @PathVariable("id_user") Long idUser);
 

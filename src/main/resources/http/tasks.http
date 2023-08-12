@@ -113,3 +113,15 @@ Content-Type: application/json
   "startDate": "2023-09-01",
   "finishDate": "2023-09-10"
 }
+
+### Add task for user, with start date after finish date
+
+POST localhost:8080/api/users/2/tasks
+Content-Type: application/json
+
+{
+  "title": "Task 2",
+  "description": "Do your home work!!!",
+  "startDate": "2023-10-05",
+  "finishDate": "2023-09-15"
+}

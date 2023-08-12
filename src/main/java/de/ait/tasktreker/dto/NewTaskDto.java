@@ -1,6 +1,7 @@
 package de.ait.tasktreker.dto;
 
 import de.ait.tasktreker.validation.constraints.BeforeCurrentDate;
+import de.ait.tasktreker.validation.constraints.CorrectDate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,6 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
+@CorrectDate
 @Schema(description = "New task")
 public class NewTaskDto {
 
