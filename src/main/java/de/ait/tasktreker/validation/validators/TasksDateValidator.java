@@ -6,7 +6,6 @@ import de.ait.tasktreker.validation.constraints.CorrectDate;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public class TasksDateValidator implements ConstraintValidator<CorrectDate, NewTaskDto> {
 
