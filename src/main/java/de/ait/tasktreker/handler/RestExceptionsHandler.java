@@ -1,8 +1,7 @@
 package de.ait.tasktreker.handler;
 
 import de.ait.tasktreker.dto.ErrorDto;
-import de.ait.tasktreker.exceptions.IncorrectUserIdException;
-import org.springframework.http.HttpStatus;
+import de.ait.tasktreker.exceptions.RestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,12 +9,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class RestExceptionsHandler {
 
-  @ExceptionHandler(IncorrectUserIdException.class)
-  public ResponseEntity<ErrorDto> handleException(IncorrectUserIdException e) {
+  @ExceptionHandler(RestException.class)
+  public ResponseEntity<ErrorDto> handleException(RestException e) {
     return ResponseEntity
-        .status(HttpStatus.UNPROCESSABLE_ENTITY)
+        .status(e.getHttpStatus())
         .body(ErrorDto.builder()
-            .message("User with id <" + e.getMessage() + "> not found")
+            .message(e.getMessage())
             .build());
   }
 }
