@@ -1,6 +1,6 @@
 package de.ait.tasktreker.controllers.api;
 
-import de.ait.tasktreker.dto.*;
+import de.ait.tasktreker.dto.TasksDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,50 +9,18 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Tags(value = {
     @Tag(name = "Tasks")
 })
 @Validated
+@RequestMapping("/api/tasks")
 public interface TasksApi {
-  @Operation(summary = "Add task for user by user_id", description = "Everyone allowed")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "422", description = "User with the specified ID is not found",
-          content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDto.class))
-          }),
-      @ApiResponse(responseCode = "201", description = "Task added",
-          content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDto.class))
-          })
-  })
-  @PostMapping("/users/{id_user}/tasks")
-  @ResponseStatus(HttpStatus.CREATED)
-  ResponseEntity<TaskDto> addTask(@Parameter(required = true, description = "User id", example = "1")
-                                  @PathVariable("id_user") Long idUser,
-                                  @RequestBody @Valid NewTaskDto newTask);
-
-  @Operation(summary = "Getting all user tasks", description = "Everyone allowed")
-  @ApiResponses(value = {
-      @ApiResponse(responseCode = "404", description = "not found",
-          content = {
-              @Content()
-          }),
-      @ApiResponse(responseCode = "200", description = "List of user tasks",
-          content = {
-              @Content(mediaType = "application/json", schema = @Schema(implementation = UserDto.class))
-          })
-  })
-  @GetMapping("/users/{id_user}/tasks")
-  ResponseEntity<TasksDto> getUserTasks(@Parameter(required = true, description = "User id", example = "1")
-                                        @PathVariable("id_user") Long idUser);
-
 
   @Operation(summary = "Getting all tasks", description = "Everyone allowed")
   @ApiResponses(value = {
@@ -60,11 +28,17 @@ public interface TasksApi {
           content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = TasksDto.class))
           })})
-  @GetMapping("/tasks")
-  ResponseEntity<TasksDto> getAllTasks(@RequestParam(value = "page") Integer page,
+  @GetMapping
+  ResponseEntity<TasksDto> getAllTasks(@Parameter(required = true, description = "Page number", example = "0")
+                                       @RequestParam(value = "page") Integer page,
+                                       @Parameter(required = true, description = "Number of items per page", example = "3")
                                        @RequestParam(value = "items") Integer items,
+                                       @Parameter(required = false, description = "Sorting field: id, title, description, startDate, finishDate (default field: id)", example = "title")
                                        @RequestParam(value = "orderBy", required = false) String orderBy,
+                                       @Parameter(required = false, description = "Sorting direction (DESK = true, ASK = false)", example = "true")
                                        @RequestParam(value = "desk", required = false) Boolean desk,
+                                       @Parameter(required = false, description = "Filter field: startDate, finishDate", example = "startDate")
                                        @RequestParam(value = "filterBy", required = false) String filterBy,
+                                       @Parameter(required = false, description = "Filter field value", example = "2023-09-01")
                                        @RequestParam(value = "filterValue", required = false) String filterValue);
 }

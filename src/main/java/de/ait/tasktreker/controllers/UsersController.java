@@ -1,9 +1,7 @@
 package de.ait.tasktreker.controllers;
 
 import de.ait.tasktreker.controllers.api.UsersApi;
-import de.ait.tasktreker.dto.NewUserDto;
-import de.ait.tasktreker.dto.UserDto;
-import de.ait.tasktreker.dto.UsersListDto;
+import de.ait.tasktreker.dto.*;
 import de.ait.tasktreker.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,5 +25,18 @@ public class UsersController implements UsersApi {
   public ResponseEntity<UsersListDto> getAllUsers() {
     return ResponseEntity
         .ok(usersService.getAllUsers());
+  }
+
+  @Override
+  public ResponseEntity<TaskDto> addTask(Long idUser, NewTaskDto newTask) {
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(usersService.addTask(idUser, newTask));
+  }
+
+  @Override
+  public ResponseEntity<TasksDto> getUserTasks(Long idUser) {
+    return ResponseEntity
+        .ok(usersService.getUserTasks(idUser));
   }
 }

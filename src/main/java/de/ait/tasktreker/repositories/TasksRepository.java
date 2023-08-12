@@ -14,5 +14,6 @@ public interface TasksRepository extends JpaRepository<Task, Long> {
   List<Task> findAllByUserId(User user);
 
   Page<Task> findAllByStartDate(LocalDate startDate, Pageable pageable);
+
   Page<Task> findAllByFinishDate(LocalDate finishDate, Pageable pageable);
 }

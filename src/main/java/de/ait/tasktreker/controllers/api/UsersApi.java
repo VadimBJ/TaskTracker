@@ -1,8 +1,6 @@
 package de.ait.tasktreker.controllers.api;
 
-import de.ait.tasktreker.dto.NewUserDto;
-import de.ait.tasktreker.dto.UserDto;
-import de.ait.tasktreker.dto.UsersListDto;
+import de.ait.tasktreker.dto.*;
 import de.ait.tasktreker.validation.dto.ValidationErrorsDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -14,16 +12,14 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.tags.Tags;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Tags(value = {
     @Tag(name = "Users")
 })
+@RequestMapping("/api/users")
 public interface UsersApi {
 
   @Operation(summary = "Adding a new user", description = "Only admin allowed")
@@ -37,7 +33,7 @@ public interface UsersApi {
               @Content(mediaType = "application/json", schema = @Schema(implementation = ValidationErrorsDto.class))
           })
   })
-  @PostMapping("/api/users")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   ResponseEntity<UserDto> addUser(@Parameter(required = true, description = "User") @RequestBody @Valid NewUserDto newUser);
 
@@ -47,7 +43,40 @@ public interface UsersApi {
           content = {
               @Content(mediaType = "application/json", schema = @Schema(implementation = UsersListDto.class))
           })})
-  @GetMapping("/api/users")
+  @GetMapping
   ResponseEntity<UsersListDto> getAllUsers();
+
+  @Operation(summary = "Add task for user by user_id", description = "Everyone allowed")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "422", description = "User with the specified ID is not found",
+          content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDto.class))
+          }),
+      @ApiResponse(responseCode = "201", description = "Task added",
+          content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDto.class))
+          })
+  })
+  @PostMapping("/users/{id_user}/tasks")
+  @ResponseStatus(HttpStatus.CREATED)
+  ResponseEntity<TaskDto> addTask(@Parameter(required = true, description = "User id", example = "1")
+                                  @PathVariable("id_user") Long idUser,
+                                  @RequestBody @Valid NewTaskDto newTask);
+
+  @Operation(summary = "Getting all user tasks", description = "Everyone allowed")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "404", description = "not found",
+          content = {
+              @Content()
+          }),
+      @ApiResponse(responseCode = "200", description = "List of user tasks",
+          content = {
+              @Content(mediaType = "application/json", schema = @Schema(implementation = TasksDto.class))
+          })
+  })
+  @GetMapping("/users/{id_user}/tasks")
+  ResponseEntity<TasksDto> getUserTasks(@Parameter(required = true, description = "User id", example = "1")
+                                        @PathVariable("id_user") Long idUser);
+
 
 }
